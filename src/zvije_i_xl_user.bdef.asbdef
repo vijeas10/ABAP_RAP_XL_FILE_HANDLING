@@ -1,0 +1,82 @@
+managed; //implementation in class zbp_vije_i_xl_user unique;
+strict ( 2 );
+with draft;
+define behavior for zvije_i_xl_user alias XLHead
+implementation in class zbp_vije_i_xl_user unique
+persistent table zvije_excel_usr
+lock master
+total etag LastChangedAt
+draft table zvije_xl_user_dr
+early numbering
+authorization master ( instance )
+etag master LocalLastChangedAt
+{
+  create;
+  update;
+  delete;
+  field ( readonly ) EndUser, FileId;
+  association _XLData { create; with draft; }
+
+  action uplaodExcelData result [1] $self;
+  determination FillFileStatus on modify { field EndUser; }
+  determination FillSelectedStatus on modify { field Attachment; }
+
+  draft action Activate optimized;
+  draft action Resume;
+  draft action Discard;
+  draft action Edit;
+  draft determine action Prepare;
+
+  mapping for zvije_excel_usr
+    {
+      EndUser            = end_user;
+      FileId             = file_id;
+      FileStatus         = file_status;
+      Attachment         = attachment;
+      Mimetype           = mimetype;
+      Filename           = filename;
+      LocalCreatedBy     = local_created_by;
+      LocalCreatedAt     = local_created_at;
+      LocalLastChangedBy = local_last_changed_by;
+      LocalLastChangedAt = local_last_changed_at;
+      LastChangedAt      = last_changed_at;
+    }
+  side effects
+  {
+
+    field Attachment affects field FileStatus;
+    action uplaodExcelData affects entity _XLData, $self;
+    //    action uplaodExcelData affects $self;
+
+  }
+
+}
+
+define behavior for zvije__xl_data alias XLDATA
+implementation in class zbp_vije_i_xl_data unique
+persistent table zvije_excel_data
+draft table zvije_xl_data_dr
+lock dependent by _XLUser
+authorization dependent by _XLUser
+//etag master <field_name>
+{
+  update;
+  delete;
+  field ( numbering : managed, readonly ) LineId;
+  field ( readonly ) EndUser, FileId, LineNumber, PoNumber, PoItem, GrQuantity, UnitOfMeasure, SiteId, HeaderText;
+  association _XLUser { with draft; }
+  mapping for zvije_excel_data
+    {
+      EndUser       = end_user;
+      FileId        = file_id;
+      LineId        = line_id;
+      LineNumber    = line_no;
+      PoNumber      = po_number;
+      PoItem        = po_item;
+      GrQuantity    = gr_quantity;
+      UnitOfMeasure = unit_of_measure;
+      SiteId        = site_id;
+      HeaderText    = header_text;
+    }
+
+}

@@ -1,0 +1,74 @@
+@Metadata.layer: #CORE
+@UI.headerInfo: {
+    typeName: 'User File',
+    typeNamePlural: 'User Files',
+    title: { type: #STANDARD,value: 'FileId' }
+
+}
+annotate entity zvije_c_xl_user with
+{
+
+  @UI.facet: [
+
+  { id: 'idUser',
+    purpose: #HEADER,
+    type: #DATAPOINT_REFERENCE,
+    position: 10,
+    targetQualifier: 'tqUser' },
+
+    { id: 'idChgAt',
+    purpose: #HEADER,
+    type: #DATAPOINT_REFERENCE,
+    position: 20,
+    targetQualifier: 'tqChgAt' },
+
+    { id: 'idStatus',
+    purpose: #HEADER,
+    type: #DATAPOINT_REFERENCE,
+    position: 30,
+    targetQualifier: 'tqStatus' },
+
+    { id: 'idFile',
+    purpose: #STANDARD,
+    type: #IDENTIFICATION_REFERENCE,
+    position: 40 ,
+    label: 'File Upload'} ,
+
+    { id: 'idFile1',
+    purpose: #STANDARD,
+    type: #LINEITEM_REFERENCE,
+    position: 50 ,
+    targetElement: '_XLData'}
+
+         ]
+
+  @UI.dataPoint:{ qualifier: 'tqUser', title: 'Person Responsible' }
+  //  @UI.identification: [{  position: 10 ,label: 'End User' }]
+  @UI.identification: [{ position:  10 , type: #FOR_ACTION , label: 'Upload Data',dataAction: 'uplaodExcelData'  },
+                      { position: 10 , label: 'End User' }]
+  EndUser;
+  @UI.hidden: true
+  FileId;
+  @UI.dataPoint:{ qualifier: 'tqStatus', title: 'File Status' }
+  @UI.lineItem: [{ position: 10 , label: 'File Status' }]
+  FileStatus;
+  @UI.identification: [{ position: 30 , label: 'Select CSV File to Upload' }]
+  Attachment;
+  @UI.hidden: true
+  Mimetype;
+  @UI.lineItem: [{ position: 20 , label: 'File Name'  }]
+  //   @UI.hidden: true
+  Filename;
+  @UI.hidden: true
+  LocalCreatedBy;
+  @UI.hidden: true
+  LocalCreatedAt;
+  @UI.hidden: true
+  LocalLastChangedBy;
+  //    @UI.hidden: true
+  @UI.dataPoint:{ qualifier: 'tqChgAt',  title: 'Last Changed At' }
+  LocalLastChangedAt;
+  @UI.hidden: true
+  LastChangedAt;
+
+}

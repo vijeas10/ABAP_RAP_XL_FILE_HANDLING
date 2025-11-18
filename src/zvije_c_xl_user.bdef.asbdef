@@ -1,0 +1,28 @@
+projection;
+strict ( 2 );
+use draft;//For Enabling Draft functionality
+
+define behavior for zvije_c_xl_user //alias <alias_name>
+{
+  use create;
+  use update;
+  use delete;
+
+  use action uplaodExcelData;
+
+  use action Activate;
+  use action Resume;
+  use action Discard;
+  use action Edit;
+  use action Prepare;
+
+  use association _XLData { create; with draft; }
+}
+
+define behavior for zvije_c_xl_data //alias <alias_name>
+{
+  use update;
+  use delete;
+
+  use association _XLUser { with draft; }
+}
