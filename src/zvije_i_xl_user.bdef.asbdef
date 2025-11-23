@@ -17,7 +17,7 @@ etag master LocalLastChangedAt
   field ( readonly ) EndUser, FileId;
   association _XLData { create; with draft; }
 
-  action uplaodExcelData result [1] $self;
+  action (features : instance) uplaodExcelData result [1] $self;
   determination FillFileStatus on modify { field EndUser; }
   determination FillSelectedStatus on modify { field Attachment; }
 

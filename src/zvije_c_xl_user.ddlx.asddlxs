@@ -49,8 +49,8 @@ annotate entity zvije_c_xl_user with
   EndUser;
   @UI.hidden: true
   FileId;
-  @UI.dataPoint:{ qualifier: 'tqStatus', title: 'File Status' }
-  @UI.lineItem: [{ position: 10 , label: 'File Status' }]
+  @UI.dataPoint:{ qualifier: 'tqStatus', title: 'File Status',criticality: 'Status_Criticality', criticalityRepresentation: #WITHOUT_ICON }
+  @UI.lineItem: [{ position: 10 , label: 'File Status' ,criticality: 'Status_Criticality',criticalityRepresentation: #WITHOUT_ICON }]
   FileStatus;
   @UI.identification: [{ position: 30 , label: 'Select CSV File to Upload' }]
   Attachment;

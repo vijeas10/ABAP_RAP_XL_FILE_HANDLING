@@ -1,7 +1,7 @@
 projection;
 strict ( 2 );
 use draft;//For Enabling Draft functionality
-
+use side effects;//refresh data on front end
 define behavior for zvije_c_xl_user //alias <alias_name>
 {
   use create;
