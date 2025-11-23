@@ -15,6 +15,8 @@ CLASS lhc_XLHead DEFINITION INHERITING FROM cl_abap_behavior_handler.
 
     METHODS FillSelectedStatus FOR DETERMINE ON MODIFY
       IMPORTING keys FOR XLHead~FillSelectedStatus.
+    METHODS get_instance_features FOR INSTANCE FEATURES
+      IMPORTING keys REQUEST requested_features FOR XLHead RESULT result.
 *    METHODS get_global_authorizations FOR GLOBAL AUTHORIZATION
 *      IMPORTING REQUEST requested_authorizations FOR XLHead RESULT result.
 
@@ -135,7 +137,7 @@ CLASS lhc_XLHead IMPLEMENTATION.
           APPEND VALUE #( %tky = wtl_file_entity[ 1 ]-%tky ) TO failed-xlhead.
           APPEND VALUE #( %tky = wtl_file_entity[ 1 ]-%tky
                           %msg = new_message_with_text( severity = if_abap_behv_message=>severity-error
-                                                        text     = 'Wrog File Format!!' ) )
+                                                        text     = 'Wrong File Format!!' ) )
 
                  TO reported-xlhead.
           UNASSIGN <fs_col_header>.
@@ -219,7 +221,7 @@ CLASS lhc_XLHead IMPLEMENTATION.
     MODIFY ENTITIES OF zvije_i_xl_user IN LOCAL MODE
            ENTITY XLHead
            UPDATE FROM VALUE #( ( %tky                = wtl_file_entity[ 1 ]-%tky
-                                  FileStatus          = 'Filed Uploaded'
+                                  FileStatus          = 'File Uploaded'
                                   %control-FileStatus = if_abap_behv=>mk-on ) )
               " TODO: variable is assigned but never used (ABAP cleaner)
            MAPPED DATA(wtl_upd_mapped)
@@ -240,6 +242,16 @@ CLASS lhc_XLHead IMPLEMENTATION.
                       ( %tky   = wel_result-%tky
 *                          %is_draft = wel_result-%is_draft
                         %param = wel_result ) ).
+
+*Provide Success Message
+    CHECK wtl_del_failed IS INITIAL AND wtl_upd_failed IS INITIAL.
+    APPEND VALUE #( %tky = wtl_file_entity[ 1 ]-%tky
+                     %msg = new_message_with_text( severity = if_abap_behv_message=>severity-success
+                                                               text     = 'File Uploaded Successfully'
+                     ) ) TO reported-xlhead.
+
+
+
   ENDMETHOD.
 
   METHOD FillFileStatus.
@@ -285,5 +297,29 @@ CLASS lhc_XLHead IMPLEMENTATION.
   ENDMETHOD.
 *  METHOD get_global_authorizations.
 *  ENDMETHOD.
+
+  METHOD get_instance_features.
+
+    READ ENTITIES OF zvije_i_xl_user IN LOCAL MODE
+    ENTITY XLHead
+    ALL FIELDS WITH CORRESPONDING #( keys )
+    RESULT DATA(wtl_result).
+
+    LOOP AT wtl_result ASSIGNING FIELD-SYMBOL(<fs_result>).
+
+      APPEND VALUE #(
+                              %tky  = <fs_result>-%tky
+                              %action-uplaodexceldata = COND #( WHEN <fs_result>-FileStatus = 'File Uploaded'
+                                                                THEN if_abap_behv=>fc-o-disabled
+                                                                WHEN <fs_result>-%is_draft = if_abap_behv=>mk-on
+                                                                THEN if_abap_behv=>fc-o-disabled
+                                                                )
+                     ) TO result.
+
+    ENDLOOP.
+
+
+
+  ENDMETHOD.
 
 ENDCLASS.
