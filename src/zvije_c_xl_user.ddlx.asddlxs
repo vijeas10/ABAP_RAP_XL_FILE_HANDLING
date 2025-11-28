@@ -56,8 +56,8 @@ annotate entity zvije_c_xl_user with
   Attachment;
   @UI.hidden: true
   Mimetype;
-  @UI.lineItem: [{ position: 20 , label: 'File Name'  }]
-  //   @UI.hidden: true
+  @UI.lineItem: [{ position: 20 , label: 'File Name'  } ]
+  @UI.selectionField: [{ position: 10 }]
   Filename;
   @UI.hidden: true
   LocalCreatedBy;

@@ -205,7 +205,6 @@ CLASS lhc_XLHead IMPLEMENTATION.
                                     %is_draft = wel_child-%is_draft ) )
      " TODO: variable is assigned but never used (ABAP cleaner)
              MAPPED DATA(wtl_del_mapped)
-    " TODO: variable is assigned but never used (ABAP cleaner)
              FAILED DATA(wtl_del_failed)
              " TODO: variable is assigned but never used (ABAP cleaner)
              REPORTED DATA(wtl_del_reported).
@@ -225,7 +224,6 @@ CLASS lhc_XLHead IMPLEMENTATION.
                                   %control-FileStatus = if_abap_behv=>mk-on ) )
               " TODO: variable is assigned but never used (ABAP cleaner)
            MAPPED DATA(wtl_upd_mapped)
-           " TODO: variable is assigned but never used (ABAP cleaner)
            FAILED DATA(wtl_upd_failed)
            " TODO: variable is assigned but never used (ABAP cleaner)
            REPORTED DATA(wtl_upd_reported).
@@ -243,15 +241,14 @@ CLASS lhc_XLHead IMPLEMENTATION.
 *                          %is_draft = wel_result-%is_draft
                         %param = wel_result ) ).
 
-*Provide Success Message
-    CHECK wtl_del_failed IS INITIAL AND wtl_upd_failed IS INITIAL.
+    " Provide Success Message
+    IF NOT ( wtl_del_failed IS INITIAL AND wtl_upd_failed IS INITIAL ).
+      RETURN.
+    ENDIF.
     APPEND VALUE #( %tky = wtl_file_entity[ 1 ]-%tky
-                     %msg = new_message_with_text( severity = if_abap_behv_message=>severity-success
-                                                               text     = 'File Uploaded Successfully'
-                     ) ) TO reported-xlhead.
-
-
-
+                    %msg = new_message_with_text( severity = if_abap_behv_message=>severity-success
+                                                  text     = 'File Uploaded Successfully' ) )
+           TO reported-xlhead.
   ENDMETHOD.
 
   METHOD FillFileStatus.
@@ -299,27 +296,20 @@ CLASS lhc_XLHead IMPLEMENTATION.
 *  ENDMETHOD.
 
   METHOD get_instance_features.
-
     READ ENTITIES OF zvije_i_xl_user IN LOCAL MODE
-    ENTITY XLHead
-    ALL FIELDS WITH CORRESPONDING #( keys )
-    RESULT DATA(wtl_result).
+         ENTITY XLHead
+         ALL FIELDS WITH CORRESPONDING #( keys )
+         RESULT DATA(wtl_result).
 
     LOOP AT wtl_result ASSIGNING FIELD-SYMBOL(<fs_result>).
 
-      APPEND VALUE #(
-                              %tky  = <fs_result>-%tky
-                              %action-uplaodexceldata = COND #( WHEN <fs_result>-FileStatus = 'File Uploaded'
-                                                                THEN if_abap_behv=>fc-o-disabled
-                                                                WHEN <fs_result>-%is_draft = if_abap_behv=>mk-on
-                                                                THEN if_abap_behv=>fc-o-disabled
-                                                                )
-                     ) TO result.
+      APPEND VALUE #( %tky                    = <fs_result>-%tky
+                      %action-uplaodexceldata = COND #( WHEN <fs_result>-FileStatus = 'File Uploaded' THEN
+                                                          if_abap_behv=>fc-o-disabled
+                                                        WHEN <fs_result>-%is_draft = if_abap_behv=>mk-on THEN
+                                                          if_abap_behv=>fc-o-disabled ) )
+             TO result.
 
     ENDLOOP.
-
-
-
   ENDMETHOD.
-
 ENDCLASS.

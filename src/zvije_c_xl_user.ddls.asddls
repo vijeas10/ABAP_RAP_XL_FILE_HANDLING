@@ -12,11 +12,12 @@ define root view entity zvije_c_xl_user
           @Semantics.largeObject: {
               mimeType: 'Mimetype',
               fileName: 'Filename',
-          //          acceptableMimeTypes: [ 'text/csv' ],
+               acceptableMimeTypes: [ 'text/csv','application/vnd.ms-excel','application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' ],
               contentDispositionPreference: #INLINE
           }
           Attachment,
           Mimetype,
+          @EndUserText.label: 'File Name'
           Filename,
           LocalCreatedBy,
           LocalCreatedAt,
