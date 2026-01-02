@@ -13,17 +13,18 @@ annotate entity zvije_c_xl_data with
                type: #IDENTIFICATION_REFERENCE  ,
                label: 'User Data'
                }
-//               { id: 'iditem' ,
-//               position: 20,
-//               purpose: #STANDARD,
-//               type: #LINEITEM_REFERENCE ,
-//               label: 'File data'
-//               }
-               
+  //               { id: 'iditem' ,
+  //               position: 20,
+  //               purpose: #STANDARD,
+  //               type: #LINEITEM_REFERENCE ,
+  //               label: 'File data'
+  //               }
+
                ]
 
 
-  @UI.lineItem: [{ position: 10, label: 'Line Id' }]
+  @UI.lineItem: [{ position: 10, label: 'Line Id'  } ,
+                 { type: #FOR_ACTION ,dataAction: 'Download_data',label: 'Download Template' }]
   LineId;
   @UI.hidden: true
   LineNumber;

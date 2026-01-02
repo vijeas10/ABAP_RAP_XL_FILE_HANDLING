@@ -17,7 +17,7 @@ etag master LocalLastChangedAt
   field ( readonly ) EndUser, FileId;
   association _XLData { create; with draft; }
 
-  action (features : instance) uplaodExcelData result [1] $self;
+  action ( features : instance ) uplaodExcelData result [1] $self;
   determination FillFileStatus on modify { field EndUser; }
   determination FillSelectedStatus on modify { field Attachment; }
 
@@ -65,6 +65,7 @@ authorization dependent by _XLUser
   field ( numbering : managed, readonly ) LineId;
   field ( readonly ) EndUser, FileId, LineNumber, PoNumber, PoItem, GrQuantity, UnitOfMeasure, SiteId, HeaderText;
   association _XLUser { with draft; }
+  action Download_data result [1] $self;
   mapping for zvije_excel_data
     {
       EndUser       = end_user;

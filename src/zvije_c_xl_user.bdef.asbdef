@@ -25,4 +25,5 @@ define behavior for zvije_c_xl_data //alias <alias_name>
   use delete;
 
   use association _XLUser { with draft; }
+//  use action Download_data;
 }
