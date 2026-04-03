@@ -13,7 +13,7 @@ ENDCLASS.
 
 
 
-CLASS zcl_cal_file_status IMPLEMENTATION.
+CLASS ZCL_CAL_FILE_STATUS IMPLEMENTATION.
 
 
   METHOD if_sadl_exit_calc_element_read~calculate.

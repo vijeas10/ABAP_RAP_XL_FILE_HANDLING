@@ -14,9 +14,11 @@ CLASS zbp_vije_i_xl_user DEFINITION PUBLIC ABSTRACT FINAL FOR BEHAVIOR OF zvije_
 
 
 
+protected section.
+private section.
 ENDCLASS.
 
 
 
-CLASS zbp_vije_i_xl_user IMPLEMENTATION.
+CLASS ZBP_VIJE_I_XL_USER IMPLEMENTATION.
 ENDCLASS.

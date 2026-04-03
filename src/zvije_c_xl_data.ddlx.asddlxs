@@ -22,7 +22,7 @@ annotate entity zvije_c_xl_data with
 
                ]
 
-
+  @UI.hidden: true
   @UI.lineItem: [{ position: 10, label: 'Line Id'  } ,
                  { type: #FOR_ACTION ,dataAction: 'Download_data',label: 'Download Template' }]
   LineId;

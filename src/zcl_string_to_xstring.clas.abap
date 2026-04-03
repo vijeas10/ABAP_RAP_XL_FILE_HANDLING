@@ -13,7 +13,9 @@ ENDCLASS.
 
 
 
-CLASS zcl_string_to_xstring IMPLEMENTATION.
+CLASS ZCL_STRING_TO_XSTRING IMPLEMENTATION.
+
+
   METHOD convert_to_xstring.
 *         DATA(wl_xstring) = cl_bcs_convert=>string_to_xstring(
 *                         iv_string     = iv_data
@@ -24,5 +26,4 @@ CLASS zcl_string_to_xstring IMPLEMENTATION.
 *    CALL FUNCTION 'scms_string_to_xstring'
 
   ENDMETHOD.
-
 ENDCLASS.
