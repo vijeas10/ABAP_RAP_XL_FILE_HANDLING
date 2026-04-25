@@ -17,6 +17,8 @@ CLASS lhc_XLHead DEFINITION INHERITING FROM cl_abap_behavior_handler.
       IMPORTING keys FOR XLHead~FillSelectedStatus.
     METHODS get_instance_features FOR INSTANCE FEATURES
       IMPORTING keys REQUEST requested_features FOR XLHead RESULT result.
+    METHODS downloadtemplate FOR MODIFY
+      IMPORTING keys FOR ACTION xlhead~downloadtemplate.
 *    METHODS get_global_authorizations FOR GLOBAL AUTHORIZATION
 *      IMPORTING REQUEST requested_authorizations FOR XLHead RESULT result.
 
@@ -312,4 +314,7 @@ CLASS lhc_XLHead IMPLEMENTATION.
 
     ENDLOOP.
   ENDMETHOD.
+  METHOD downloadTemplate.
+  ENDMETHOD.
+
 ENDCLASS.

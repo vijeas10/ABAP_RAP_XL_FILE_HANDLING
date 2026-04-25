@@ -18,6 +18,7 @@ etag master LocalLastChangedAt
   association _XLData { create; with draft; }
 
   action ( features : instance ) uplaodExcelData result [1] $self;
+  static action downloadTemplate;
   determination FillFileStatus on modify { field EndUser; }
   determination FillSelectedStatus on modify { field Attachment; }
 

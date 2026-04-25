@@ -9,6 +9,7 @@ define behavior for zvije_c_xl_user //alias <alias_name>
   use delete;
 
   use action uplaodExcelData;
+  use action downloadTemplate;
 
   use action Activate;
   use action Resume;
